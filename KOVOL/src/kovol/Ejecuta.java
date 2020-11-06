@@ -7,16 +7,8 @@ package kovol;
 
 /**
  *
- * @author ebri_85
+ * @author ebri_
  */
-public class main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        String archivo = args[0];
-    }
+public class Ejecuta {
     
 }
