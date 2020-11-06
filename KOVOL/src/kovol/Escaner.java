@@ -5,10 +5,23 @@
  */
 package kovol;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author ebri_
  */
 public class Escaner {
+    
+   
+    
+    List<String> codigo = Collections.EMPTY_LIST;
+    ArrayList<String> reservadas = new ArrayList();
+    
+    
     
 }
