@@ -14,102 +14,119 @@ import java.nio.file.Paths;
  */
 public class InfoArchivo {
 
-    private String archivo;
-    private Path rutaJar;
-    private Path rutaCompletaJar;
-    private String DirectorioProyecto;
-    private String rutaArchivo;
+    String archivo;
+    String rutaArchivo;
+    Path rutaJar = Paths.get("");
+    Path rutaCompletaJar = rutaJar.toAbsolutePath();
+    String DirectorioProyecto = rutaCompletaJar.toString();
+    String nombArchivo;
+    String rutaArchivoString;
+    Path nombreCob;
+    Path rutaNombreErrores;
 
+    public InfoArchivo(String str) {
 
-    
-    public InfoArchivo() {
+        this.archivo = str;
+
     }
 
-    public InfoArchivo(String archivo,Path rutaJar, Path rutaCompletaJar, String DirectorioProyecto, String rutaArchivo, String archivo_Cob, String archivo_Kovol, String archivo_Errores) {
-        this.rutaJar = rutaJar;
-        this.archivo = archivo;
-        this.rutaCompletaJar = rutaCompletaJar;
-        this.DirectorioProyecto = DirectorioProyecto;
-        this.rutaArchivo = rutaArchivo;
-        
+    protected void GeneraDatos() {
+        try {
+            nombArchivo = NombreArchivo();
+            rutaArchivoString = ObtenerRutaArchivoToString();
+            nombreCob = NombreCob();
+            rutaNombreErrores = RutaNombreErrores();
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>GeneraDatos()=>" + e.getMessage());
+//            e.printStackTrace();
+//
+        }
     }
 
-    public String getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
-    }
-
-    public Path getRutaJar() {
-        return rutaJar;
-    }
-
-    private void setRutaJar() {
-        Path rutaJar= Paths.get("");
-        this.rutaJar = rutaJar;
-    }
-
-    public Path getRutaCompletaJar() {
-        return rutaCompletaJar;
-    }
-
-    private void setRutaCompletaJar() {
-        Path rutaCompletaJar = this.rutaJar.toAbsolutePath();
-        this.rutaCompletaJar = rutaCompletaJar;
-    }
-
-    public String getDirectorioProyecto() {
-        return DirectorioProyecto;
-    }
-
-    private void setDirectorioProyecto() {
-        String DirectorioProyecto = this.rutaCompletaJar.toString();
-        this.DirectorioProyecto = DirectorioProyecto;
-    }
-
-    public String getRutaArchivo() {
-        return rutaArchivo;
-    }
-
-    private void setRutaArchivo() {
-        String rutaArchivo = Paths.get("").toAbsolutePath().resolve(this.archivo).toString();
-        this.rutaArchivo = rutaArchivo;
-    }
-
+//    private void DefineRutaDir() {
+//        try {
+//
+//           his.rutaArchivo= ObtenerRutaArchivoToString();
+//
+//        } catch (Exception e) {
+//            System.out.println("Clase InfoArchivo>DefineRutaDir()=>" + e.getMessage());
+//            e.printStackTrace();
+//
+//        }
+//
+//    }
     @Override
     public String toString() {
-        return "InfoArchivo{" + "archivo=" + archivo + ", rutaJar=" + rutaJar + ", rutaCompletaJar=" + rutaCompletaJar + ", DirectorioProyecto=" + DirectorioProyecto + ", rutaArchivo=" + rutaArchivo + '}';
+        return "Detalles del Archivo{\n"
+                + "archivo=" + archivo
+                + "\n rutaJar=" + rutaJar
+                + "\n rutaCompletaJar=" + rutaCompletaJar
+                + "\n DirectorioProyecto=" + DirectorioProyecto;
+
     }
 
-  public String NombreArchivo()
-  {
-      Path resultado = Paths.get("").toAbsolutePath().resolve(this.archivo).getFileName();
-      return resultado.toString();
-  }
-  
-   public Path RutaNombreCob()
-  {
-      Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
-      Path resultado = rt.getFileName();
-      
-      String rtCob = resultado.toString()+".cob";
-      Path ruta = Paths.get(rtCob);
+    private String NombreArchivo() {
+        try {
+            Path resultado = Paths.get("").toAbsolutePath().resolve(this.archivo).getFileName();
+            return resultado.toString();
 
-      
-      return ruta;
-  }
-    public Path RutaNombreErrores()
-  {
-      Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
-      Path resultado = rt.getFileName();
-      
-      String rtErrores = resultado.toString().concat("-errores.txt");
-      Path ruta = Paths.get(rtErrores);
-      
-      return ruta;
-  }
-    
-    
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>NombreArchivo()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String ObtenerRutaArchivoToString() {
+        try {
+
+            Path rutaArchivo = Paths.get("").toAbsolutePath().resolve(this.archivo);
+
+            return rutaArchivo.toString();
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>ObtenerRutaArchivoToString()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+
+    private Path NombreCob() {
+
+        try {
+            Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
+            Path resultado = rt.getFileName();
+
+            String rtCob = resultado.toString() + ".cob";
+            Path ruta = Paths.get(rtCob);
+            return ruta;
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>NombreCob()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private Path RutaNombreErrores() {
+
+        try {
+            Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
+            Path resultado = rt.getFileName();
+
+            String rtErrores = resultado.toString().concat("-errores.txt");
+            Path ruta = Paths.get(rtErrores);
+
+            return ruta;
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>RutaNombreErrores()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
