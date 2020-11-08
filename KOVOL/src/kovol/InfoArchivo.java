@@ -7,6 +7,8 @@ package kovol;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -82,7 +84,6 @@ public class InfoArchivo {
         try {
 
             Path rutaArchivo = Paths.get("").toAbsolutePath().resolve(this.archivo);
-
             return rutaArchivo.toString();
 
         } catch (Exception e) {
@@ -96,10 +97,12 @@ public class InfoArchivo {
     private Path NombreCob() {
 
         try {
+            String extension = ".cob";
             Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
-            Path resultado = rt.getFileName();
 
-            String rtCob = resultado.toString() + ".cob";
+            String resultado = rt.getFileName().toString();
+            
+            String rtCob = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtCob);
             return ruta;
 
@@ -114,10 +117,12 @@ public class InfoArchivo {
     private Path RutaNombreErrores() {
 
         try {
+            String extension = "-errores.txt";
             Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
-            Path resultado = rt.getFileName();
 
-            String rtErrores = resultado.toString().concat("-errores.txt");
+            String resultado = rt.getFileName().toString();
+
+            String rtErrores = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtErrores);
 
             return ruta;
@@ -129,4 +134,17 @@ public class InfoArchivo {
         }
     }
 
+    private String RemueveExtensionKovol(String nombreArchivo, String nuevaExtension) {
+        try {
+            Pattern ptr = Pattern.compile(".kovol", Pattern.CASE_INSENSITIVE);
+            Matcher match = ptr.matcher(nombreArchivo);
+            return match.replaceAll(nuevaExtension);
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>ModificaExtension()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

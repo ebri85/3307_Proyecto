@@ -22,19 +22,22 @@ import java.util.List;
  */
 public class Ejecuta {
 
-    public String archivo;
-    public List<String> codigo = Collections.emptyList();
-    public ArrayList<String> reservadas = CargaReservadas();
-    public InfoArchivo infoArchivo;
+    protected String archivo;
+    protected List<String> codigo = Collections.emptyList();
+    protected ArrayList<String> reservadas = CargaReservadas();
+    protected InfoArchivo infoArchivo;
 
     boolean cargarCodigo;
     boolean generaErrores;
+    
+    Escaner escaner;
 
     public Ejecuta(String str) {
         try {
 
             archivo = str;
             infoArchivo = new InfoArchivo(archivo);
+            
 
             //System.out.println("EJECUTA() - valor de archivo ->" + archivo);
 
@@ -50,6 +53,8 @@ public class Ejecuta {
             
             infoArchivo.GeneraDatos();
             cargarCodigo = CargaCodigo();
+            escaner = new Escaner(codigo,reservadas,infoArchivo);
+            escaner.GeneraDatos();
            
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>GeneraDatos()=>" + e.getMessage());
@@ -98,7 +103,7 @@ public class Ejecuta {
             }
             codigo = Files.readAllLines(file.toPath());
 
-            codigo.forEach((e -> System.out.println(e)));
+            //codigo.forEach((e -> System.out.println(e)));
 
             return true;
 
