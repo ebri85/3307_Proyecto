@@ -60,8 +60,8 @@ public class Escaner {
 
     private void GeneraArchivoErrores(List<String> c, InfoArchivo a) {
         try {
-            System.out.println("ENTRO AL METODO GeneraArchivoErrores\n"
-                    + "\n" + c.isEmpty() + "\n" + a.toString());
+//            System.out.println("ENTRO AL METODO GeneraArchivoErrores\n"
+//                    + "\n" + c.isEmpty() + "\n" + a.toString());
 
             int i = 0;
             int j = 0;
@@ -89,7 +89,7 @@ public class Escaner {
                 this.errores.add(str2);
             }
             //tmp.forEach(e -> System.out.println(e));
-               System.out.println("RutaNombreErrores ->"+a.rutaNombreErrores);
+             //  System.out.println("RutaNombreErrores ->"+a.rutaNombreErrores);
               
             Files.write(a.rutaNombreErrores, this.errores);
             
@@ -122,7 +122,7 @@ public class Escaner {
 
             switch (error) {
                 case 0:
-                    File file = new File(a.nombreCob.toString());
+                    //File file = new File(a.nombreCob.toString());
                     Files.write(a.nombreCob, c);
                         
                     break;

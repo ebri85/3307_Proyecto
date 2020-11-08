@@ -124,7 +124,7 @@ public class InfoArchivo {
 
             String rtErrores = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtErrores);
-            System.out.println("ruta-> " + ruta);
+           // System.out.println("ruta-> " + ruta);
             return ruta;
 
         } catch (Exception e) {
