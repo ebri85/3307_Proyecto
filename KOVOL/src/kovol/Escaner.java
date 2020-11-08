@@ -24,24 +24,33 @@ import java.util.regex.Pattern;
  */
 public class Escaner {
 
-    private List<String> cod;
-    private ArrayList<String> reserv;
-    private ArrayList<String> errores;
-    private InfoArchivo dataArchivo;
+    protected List<String> codigo = Collections.emptyList();
+    protected ArrayList<String> errores = new ArrayList();
+    protected ArrayList<String> reservadas;
+    protected InfoArchivo dataArchivo;
 
     boolean error = false;
 
-    public Escaner(List c, ArrayList r, InfoArchivo a) {
-        this.cod = c;
-        this.reserv = r;
+    public Escaner(List<String> c, ArrayList<String> r, InfoArchivo a) {
+        this.codigo = c;
+        this.reservadas = r;
         this.dataArchivo = a;
     }
 
     protected void GeneraDatos() {
         try {
+            boolean error = false;
 
-            errores = GeneraArchivoErrores(cod);
-            GeneraArchivoCob(dataArchivo, cod);
+            while (!(error)) {
+
+                // System.out.println(this.dataArchivo.toString());
+                GeneraArchivoCob(this.dataArchivo, this.codigo);
+                error = true;
+               
+
+                
+            }
+             GeneraArchivoErrores(this.codigo, this.dataArchivo);
 
         } catch (Exception e) {
             System.out.println("Clase Escaner>GeneraDatos()=>" + e.getMessage());
@@ -49,16 +58,19 @@ public class Escaner {
         }
     }
 
-    private ArrayList<String> GeneraArchivoErrores(List<String> c) {
+    private void GeneraArchivoErrores(List<String> c, InfoArchivo a) {
         try {
+            System.out.println("ENTRO AL METODO GeneraArchivoErrores\n"
+                    + "\n" + c.isEmpty() + "\n" + a.toString());
+
             int i = 0;
             int j = 0;
             String str1, str2;
-            ArrayList<String> tmp = new ArrayList();
+            // ArrayList<String> tmp = new ArrayList();
             if (c.isEmpty()) {
                 System.out.println("c.isEmpty()->" + c.isEmpty());
                 System.out.println("Parametros Vacios");
-                return null;
+                return;
             }
             //System.out.println("Parametros contiene data");
 
@@ -71,20 +83,21 @@ public class Escaner {
 
                 //str2 = str1 + ln;
                 str2 = RemplazaEspacios(ln, str1);
-               // System.out.println(ln);
-
-                tmp.add(str2);
+                // System.out.println(ln);
+//                System.out.println("Entro al For de GeneraArchivoErrores\n"
+//                        + "\n" + j + "\n" + str2 + "\n");
+                this.errores.add(str2);
             }
             //tmp.forEach(e -> System.out.println(e));
-
-            Files.write(dataArchivo.rutaNombreErrores, tmp);
-
-            return new ArrayList(tmp);
+               System.out.println("RutaNombreErrores ->"+a.rutaNombreErrores);
+              
+            Files.write(a.rutaNombreErrores, this.errores);
+            
 
         } catch (Exception e) {
             System.out.println("Clase Escaner>GeneraArchivoErrores()=>" + e.getMessage());
             e.printStackTrace();
-            return null;
+
         }
 
     }
@@ -103,28 +116,27 @@ public class Escaner {
         return mtch.replaceAll(reemplaza);
     }
 
-    private void GeneraArchivoCob(InfoArchivo a ,List c) {
+    private void GeneraArchivoCob(InfoArchivo a, List c) {
         try {
             int error = EncontroError(c);
-            
-            switch(error)
-            {
+
+            switch (error) {
                 case 0:
+                    File file = new File(a.nombreCob.toString());
                     Files.write(a.nombreCob, c);
-                    
+                        
                     break;
-                    
+
                 case 1:
-                    
+
                     break;
-                    
+
                 default:
                     System.out.println("Error en case");
                     break;
-                    
+
             }
-            
-         
+
         } catch (Exception e) {
             System.out.println("Clase Escaner>GeneraArchivoCob()=>" + e.getMessage());
             e.printStackTrace();
@@ -133,17 +145,15 @@ public class Escaner {
 
     private int EncontroError(List c) {
         try {
-            int resultado= 0;
-            
-            
-            
+            int resultado = 0;
+
             return resultado;
-            
+
         } catch (Exception e) {
             System.out.println("Clase Escaner>RevisaErrores()=>" + e.getMessage());
             e.printStackTrace();
-            
-            return -1 ;
+
+            return -1;
         }
     }
 

@@ -101,7 +101,7 @@ public class InfoArchivo {
             Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
 
             String resultado = rt.getFileName().toString();
-            
+
             String rtCob = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtCob);
             return ruta;
@@ -124,7 +124,7 @@ public class InfoArchivo {
 
             String rtErrores = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtErrores);
-
+            System.out.println("ruta-> " + ruta);
             return ruta;
 
         } catch (Exception e) {
@@ -136,9 +136,19 @@ public class InfoArchivo {
 
     private String RemueveExtensionKovol(String nombreArchivo, String nuevaExtension) {
         try {
-            Pattern ptr = Pattern.compile(".kovol", Pattern.CASE_INSENSITIVE);
-            Matcher match = ptr.matcher(nombreArchivo);
-            return match.replaceAll(nuevaExtension);
+            boolean error = true;
+            String resultado = null;
+            while (error) {
+                Pattern ptr = Pattern.compile(".kovol", Pattern.CASE_INSENSITIVE);
+                Matcher match = ptr.matcher(nombreArchivo);
+                resultado = match.replaceAll(nuevaExtension);
+                error = false;
+                
+                nombreArchivo = null;
+                nuevaExtension = null;
+            };
+
+            return resultado;
 
         } catch (Exception e) {
             System.out.println("Clase InfoArchivo>ModificaExtension()=>" + e.getMessage());

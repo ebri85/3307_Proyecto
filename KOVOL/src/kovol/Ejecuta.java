@@ -24,23 +24,25 @@ public class Ejecuta {
 
     protected String archivo;
     protected List<String> codigo = Collections.emptyList();
-    protected ArrayList<String> reservadas = CargaReservadas();
+    protected ArrayList<String> reservadas = new ArrayList();
     protected InfoArchivo infoArchivo;
+    protected Escaner escaner;
+    
 
     boolean cargarCodigo;
     boolean generaErrores;
-    
-    Escaner escaner;
 
+    public Ejecuta() {
+    }
+
+ 
     public Ejecuta(String str) {
         try {
 
             archivo = str;
-            infoArchivo = new InfoArchivo(archivo);
-            
+            infoArchivo = new InfoArchivo(str);
 
             //System.out.println("EJECUTA() - valor de archivo ->" + archivo);
-
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>Ejecuta()=>" + e.getMessage());
             e.printStackTrace();
@@ -50,17 +52,30 @@ public class Ejecuta {
 
     protected void GeneraDatos() {
         try {
-            
-            infoArchivo.GeneraDatos();
-            cargarCodigo = CargaCodigo();
-            escaner = new Escaner(codigo,reservadas,infoArchivo);
-            escaner.GeneraDatos();
-           
+            do {
+                CargaReservadas();
+                infoArchivo.GeneraDatos();
+                cargarCodigo = CargaCodigo();
+                EnviaInfoEscaner(this.codigo,this.reservadas,this.infoArchivo);
+                escaner.GeneraDatos();
+                
+
+            } while (reservadas.isEmpty());
+
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>GeneraDatos()=>" + e.getMessage());
             e.printStackTrace();
         }
-
+    }
+    
+    private void EnviaInfoEscaner(List<String> c,ArrayList<String> r, InfoArchivo a){
+        try {
+            this.escaner = new Escaner(c,r,a);
+            
+        } catch (Exception e) {
+                System.out.println("Clase Ejecuta>EnviaAescaner()=>" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -68,25 +83,27 @@ public class Ejecuta {
      *
      * @return Objeto de tipo @String con la lista de Reservadas
      */
-    private ArrayList<String> CargaReservadas() {
+    private void CargaReservadas() {
         try {
-
-            ArrayList<String> temp = new ArrayList();
-            InputStream iSt = this.getClass().getResourceAsStream("/KOVOL/UTILS/reservadas.txt");
+            //  System.out.println("ENTRO AL METODO CARGA RESERVADAS");
+            InputStream iSt = this.getClass().getResourceAsStream("/kovol/UTILS/reservadas.txt");
             InputStreamReader iStR = new InputStreamReader(iSt);
             BufferedReader bR = new BufferedReader(iStR);
-            String hilera;
+            String hilera = null;
+
             do {
-                temp.add(hilera = bR.readLine());
+                hilera = bR.readLine();
+                this.reservadas.add(hilera);
+                //    System.out.println(hilera);
 
             } while (hilera != null);
-            // temp.forEach(e->System.out.println(e));
-            return new ArrayList(temp);
+            // this.reservadas.forEach(e->System.out.println(e));
 
         } catch (Exception e) {
+
             System.out.println("Clase Ejecuta>CargaReservadas()=>" + e.getMessage());
             e.printStackTrace();
-            return null;
+
         }
 
     }
@@ -97,14 +114,13 @@ public class Ejecuta {
             //System.out.println("RUTA_ARCHIVO =>" + RUTA_ARCHIVO);
             File file = new File(infoArchivo.archivo);
 
-            if (!(file.exists())) {                
+            if (!(file.exists())) {
                 error = true;
                 System.out.println("file.exists() =>" + file.exists());
             }
             codigo = Files.readAllLines(file.toPath());
 
             //codigo.forEach((e -> System.out.println(e)));
-
             return true;
 
         } catch (Exception e) {
@@ -113,7 +129,15 @@ public class Ejecuta {
             return false;
         }
 
-    } 
-    
+    }
+
+    protected void Compila() {
+        try {
+
+        } catch (Exception e) {
+            System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 }
