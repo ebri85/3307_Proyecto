@@ -130,10 +130,37 @@ public class Ejecuta {
         }
 
     }
+    
 
     protected void Compila() {
         try {
-
+            PreCompila();
+            String archivoExe = infoArchivo.RemueveExtensionCob(infoArchivo.nombreCob.toString(),".exe");
+            Runtime.getRuntime().exec(new String[]{
+                "cmd",
+                "/K",
+                "Start",
+                 archivoExe               
+                
+            });
+        } catch (Exception e) {
+            System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+     private void PreCompila() {
+        try {
+            
+            Runtime.getRuntime().exec(new String[]{
+                "cmd",
+                "/K",
+                "Start",
+                "cobc",
+                "-x",
+                infoArchivo.nombreCob.toString()
+                            
+            });
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
             e.printStackTrace();

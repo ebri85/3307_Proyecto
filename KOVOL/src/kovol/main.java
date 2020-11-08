@@ -25,6 +25,9 @@ public class main {
         Ejecuta ejecuta = new Ejecuta(archivo);
         
         ejecuta.GeneraDatos();
+        
+        ejecuta.Compila();
+        
 
     }
     

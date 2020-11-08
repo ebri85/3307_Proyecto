@@ -157,4 +157,28 @@ public class InfoArchivo {
         }
 
     }
+    
+        protected String RemueveExtensionCob(String nombreArchivo, String nuevaExtension) {
+        try {
+            boolean error = true;
+            String resultado = null;
+            while (error) {
+                Pattern ptr = Pattern.compile(".kovol", Pattern.CASE_INSENSITIVE);
+                Matcher match = ptr.matcher(nombreArchivo);
+                resultado = match.replaceAll(nuevaExtension);
+                error = false;
+                
+                nombreArchivo = null;
+                nuevaExtension = null;
+            };
+
+            return resultado;
+
+        } catch (Exception e) {
+            System.out.println("Clase InfoArchivo>ModificaExtension()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

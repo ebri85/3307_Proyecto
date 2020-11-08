@@ -46,11 +46,9 @@ public class Escaner {
                 // System.out.println(this.dataArchivo.toString());
                 GeneraArchivoCob(this.dataArchivo, this.codigo);
                 error = true;
-               
 
-                
             }
-             GeneraArchivoErrores(this.codigo, this.dataArchivo);
+            GeneraArchivoErrores(this.codigo, this.dataArchivo);
 
         } catch (Exception e) {
             System.out.println("Clase Escaner>GeneraDatos()=>" + e.getMessage());
@@ -77,22 +75,32 @@ public class Escaner {
             for (String ln : c) {
 
                 j = c.lastIndexOf(i);
-                i++;
-                j = i;
-                str1 = String.format("%05d", j);
+                
+                
+               // str1 = String.format("%05d", j);
+                //str2=null;
 
                 //str2 = str1 + ln;
+                if ((ln.isEmpty())) {
+                    
+                    j = i;
+                
+                } else {
+                    i++;
+                    j=i;
+                }
+                str1 = String.format("%05d", j);
                 str2 = RemplazaEspacios(ln, str1);
+                    this.errores.add(str2);
                 // System.out.println(ln);
 //                System.out.println("Entro al For de GeneraArchivoErrores\n"
 //                        + "\n" + j + "\n" + str2 + "\n");
-                this.errores.add(str2);
+
             }
             //tmp.forEach(e -> System.out.println(e));
-             //  System.out.println("RutaNombreErrores ->"+a.rutaNombreErrores);
-              
+            //  System.out.println("RutaNombreErrores ->"+a.rutaNombreErrores);
+
             Files.write(a.rutaNombreErrores, this.errores);
-            
 
         } catch (Exception e) {
             System.out.println("Clase Escaner>GeneraArchivoErrores()=>" + e.getMessage());
@@ -111,7 +119,7 @@ public class Escaner {
      * 00000
      */
     private String RemplazaEspacios(String linea, String reemplaza) {
-        Pattern ptr = Pattern.compile("^\\s{5}");
+        Pattern ptr = Pattern.compile("^\\s{5}|^\\n");
         Matcher mtch = ptr.matcher(linea);
         return mtch.replaceAll(reemplaza);
     }
@@ -124,7 +132,7 @@ public class Escaner {
                 case 0:
                     //File file = new File(a.nombreCob.toString());
                     Files.write(a.nombreCob, c);
-                        
+
                     break;
 
                 case 1:
