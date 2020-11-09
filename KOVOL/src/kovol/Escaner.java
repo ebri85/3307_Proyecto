@@ -148,6 +148,7 @@ public class Escaner {
 
     /**
      * <b>ValidaTamanoLinea</b>
+     * Metodo que empieza a validar lineas
      *
      * @param linea
      * @return 0 -> para tamano correcto, 1 tamano incorrecto, -1 error
@@ -160,11 +161,11 @@ public class Escaner {
                 boolean continua = true;
                 while (continua) {
 
-                    mensajeError += "#-Linea="+String.valueOf(c.indexOf(linea)) + " Linea-> " + linea + "\n";
+                    mensajeError += "#-Linea=" + String.valueOf(c.indexOf(linea)) + " Linea-> " + linea + "\n";
                     mensajeError += (linea.length() <= 80) ? "**" : "Error linea contiene mas columnas de las requeridas\n";
                     Pattern p = Pattern.compile("^\\s{6}|^\\n");
                     Matcher m = p.matcher(linea);
-                    mensajeError += (p.matcher(linea).find()) ? "**" : "Error primeras 6 columnas no estan en blanco "+m.matches() + "\n";
+                    mensajeError += (p.matcher(linea).find()) ? "**" : "Error primeras 6 columnas no estan en blanco " + m.matches() + "\n";
                     Pattern ptr = Pattern.compile(".$");
                     mensajeError += (ptr.matcher(linea).find()) ? "**" : "Error no encontro '.' al final de la linea\n";
 

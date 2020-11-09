@@ -9,32 +9,24 @@ import java.nio.file.Paths;
 
 /**
  *
- *   @author Esau Brizuela
+ * @author Esau Brizuela
  */
 public class main {
 
-        
-   
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String archivo = args[0];
-        int estatus=0;
-      
-            
-        Ejecuta ejecuta = new Ejecuta(archivo);
-        //ejecuta.infoArchivo.toString();
-        
-       // ejecuta.GeneraDatos();
-         //ejecuta.Compila();
-         
-        
-      
-      
-        
+
+        try {
+            String archivo = args[0];
+
+            Ejecuta ejecuta = new Ejecuta(archivo);
+        } catch (Exception e) {
+            System.out.println("Clase Main=>" + e.getMessage());
+            e.printStackTrace();
+        }
 
     }
-    
+
 }

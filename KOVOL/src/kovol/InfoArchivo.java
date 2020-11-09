@@ -11,9 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- <b>* Clase InfoArchivo</b>
- *Extrae toda la iformacion necesaria, del Kovol.jar
- * para apartir de esto generar el resto de archivos.
+ * <b>* Clase InfoArchivo</b>
+ * Extrae toda la iformacion necesaria, del Kovol.jar para apartir de esto
+ * generar el resto de archivos.
+ *
  * @author Esau Brizuela
  */
 public class InfoArchivo {
@@ -52,18 +53,6 @@ public class InfoArchivo {
         }
     }
 
-//    private void DefineRutaDir() {
-//        try {
-//
-//           his.rutaArchivo= ObtenerRutaArchivoToString();
-//
-//        } catch (Exception e) {
-//            System.out.println("Clase InfoArchivo>DefineRutaDir()=>" + e.getMessage());
-//            e.printStackTrace();
-//
-//        }
-//
-//    }
 
     /**
      *
@@ -108,14 +97,14 @@ public class InfoArchivo {
     private Path NombreCob() {
 
         try {
-              String extension = ".cob";
+            String extension = ".cob";
             Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
 
             String resultado = rt.getFileName().toString();
 
             String rtErrores = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtErrores);
-           // System.out.println("ruta-> " + ruta);
+            // System.out.println("ruta-> " + ruta);
             return ruta;
         } catch (Exception e) {
             System.out.println("Clase InfoArchivo>NombreCob()=>" + e.getMessage());
@@ -135,7 +124,7 @@ public class InfoArchivo {
 
             String rtErrores = RemueveExtensionKovol(resultado, extension);
             Path ruta = Paths.get(rtErrores);
-           // System.out.println("ruta-> " + ruta);
+            // System.out.println("ruta-> " + ruta);
             return ruta;
 
         } catch (Exception e) {
@@ -154,8 +143,7 @@ public class InfoArchivo {
                 Matcher match = ptr.matcher(nombreArchivo);
                 resultado = match.replaceAll(nuevaExtension);
                 error = false;
-                
-              
+
             };
 
             return resultado;
@@ -167,8 +155,8 @@ public class InfoArchivo {
         }
 
     }
-    
-        protected String GeneraExtensionExe(String nombreArchivo, String nuevaExtension) {
+
+    protected String GeneraExtensionExe(String nombreArchivo, String nuevaExtension) {
         try {
             boolean error = true;
             String resultado = null;
@@ -177,8 +165,7 @@ public class InfoArchivo {
                 Matcher match = ptr.matcher(nombreArchivo);
                 resultado = match.replaceAll(nuevaExtension);
                 error = false;
-                
-                
+
             };
 
             return resultado;
