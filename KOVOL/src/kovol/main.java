@@ -21,12 +21,18 @@ public class main {
      */
     public static void main(String[] args) {
         String archivo = args[0];
-        
+        int estatus=0;
+      
+            
         Ejecuta ejecuta = new Ejecuta(archivo);
+        //ejecuta.infoArchivo.toString();
         
-        ejecuta.GeneraDatos();
+       // ejecuta.GeneraDatos();
+         //ejecuta.Compila();
+         
         
-        ejecuta.Compila();
+      
+      
         
 
     }

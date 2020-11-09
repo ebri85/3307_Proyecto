@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -22,12 +23,13 @@ import java.util.List;
  */
 public class Ejecuta {
 
+    private String archivoExe;
     protected String archivo;
+
     protected List<String> codigo = Collections.emptyList();
     protected ArrayList<String> reservadas = new ArrayList();
     protected InfoArchivo infoArchivo;
     protected Escaner escaner;
-    
 
     boolean cargarCodigo;
     boolean generaErrores;
@@ -35,12 +37,12 @@ public class Ejecuta {
     public Ejecuta() {
     }
 
- 
     public Ejecuta(String str) {
         try {
 
             archivo = str;
             infoArchivo = new InfoArchivo(str);
+            GeneraDatos();
 
             //System.out.println("EJECUTA() - valor de archivo ->" + archivo);
         } catch (Exception e) {
@@ -54,10 +56,12 @@ public class Ejecuta {
         try {
             do {
                 CargaReservadas();
+                
                 infoArchivo.GeneraDatos();
                 cargarCodigo = CargaCodigo();
-                EnviaInfoEscaner(this.codigo,this.reservadas,this.infoArchivo);
+                EnviaInfoEscaner(this.codigo, this.reservadas, this.infoArchivo);
                 escaner.GeneraDatos();
+                 Compila();
                 
 
             } while (reservadas.isEmpty());
@@ -67,13 +71,13 @@ public class Ejecuta {
             e.printStackTrace();
         }
     }
-    
-    private void EnviaInfoEscaner(List<String> c,ArrayList<String> r, InfoArchivo a){
+
+    private void EnviaInfoEscaner(List<String> c, ArrayList<String> r, InfoArchivo a) {
         try {
-            this.escaner = new Escaner(c,r,a);
-            
+            this.escaner = new Escaner(c, r, a);
+
         } catch (Exception e) {
-                System.out.println("Clase Ejecuta>EnviaAescaner()=>" + e.getMessage());
+            System.out.println("Clase Ejecuta>EnviaAescaner()=>" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -130,41 +134,70 @@ public class Ejecuta {
         }
 
     }
-    
 
     protected void Compila() {
         try {
-            PreCompila();
-            String archivoExe = infoArchivo.RemueveExtensionCob(infoArchivo.nombreCob.toString(),".exe");
-            Runtime.getRuntime().exec(new String[]{
-                "cmd",
-                "/K",
-                "Start",
-                 archivoExe               
-                
-            });
-        } catch (Exception e) {
-            System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-     private void PreCompila() {
-        try {
-            
-            Runtime.getRuntime().exec(new String[]{
-                "cmd",
-                "/K",
-                "Start",
+            this.archivoExe = infoArchivo.GeneraExtensionExe(infoArchivo.nombreCob.toString(), ".exe");
+            String arch = this.archivoExe;
+            String nomCob = infoArchivo.nombreCob.toString();
+            Process p = Runtime.getRuntime().exec(new String[]{
                 "cobc",
                 "-x",
-                infoArchivo.nombreCob.toString()
-                            
+                nomCob
             });
+            
+            Thread t = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+
+                        p.waitFor();
+                        Runtime.getRuntime().exec(new String[]{
+                            "cmd",
+                            "/c",
+                            "Start",
+                            "cmd",
+                            "/k",
+                            arch
+                        });
+
+                    } catch (Exception e) {
+                        System.out.println("Clase Ejecuta>Void()=>" + e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            t.start();
+            
+
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
             e.printStackTrace();
+            
         }
     }
 
+//    protected int CorreExe() {
+//        try {
+//            this.archivoExe = infoArchivo.GeneraExtensionExe(infoArchivo.nombreCob.toString(), ".exe");
+//            String arch = this.archivoExe;
+//
+//            Runtime.getRuntime().exec(new String[]{
+//                "cmd",
+//                "/C",
+//                arch
+//
+//            });
+//            rt.waitFor();
+//            return rt.exitValue();
+//
+//        } catch (Exception e) {
+//            System.out.println("Clase Ejecuta>CorreExe()=>" + e.getMessage());
+//            e.printStackTrace();
+//            return -1;
+//        }
+//
+//    }
 }

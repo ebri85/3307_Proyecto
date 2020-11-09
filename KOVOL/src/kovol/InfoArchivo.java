@@ -20,7 +20,7 @@ public class InfoArchivo {
     String rutaArchivo;
     Path rutaJar = Paths.get("");
     Path rutaCompletaJar = rutaJar.toAbsolutePath();
-    String DirectorioProyecto = rutaCompletaJar.toString();
+    String DirectorioProyecto = rutaCompletaJar.toString();//ruta de donde se ejecuta el JAR
     String nombArchivo;
     String rutaArchivoString;
     Path nombreCob;
@@ -97,15 +97,15 @@ public class InfoArchivo {
     private Path NombreCob() {
 
         try {
-            String extension = ".cob";
+              String extension = ".cob";
             Path rt = Paths.get("").toAbsolutePath().resolve(this.archivo);
 
             String resultado = rt.getFileName().toString();
 
-            String rtCob = RemueveExtensionKovol(resultado, extension);
-            Path ruta = Paths.get(rtCob);
+            String rtErrores = RemueveExtensionKovol(resultado, extension);
+            Path ruta = Paths.get(rtErrores);
+           // System.out.println("ruta-> " + ruta);
             return ruta;
-
         } catch (Exception e) {
             System.out.println("Clase InfoArchivo>NombreCob()=>" + e.getMessage());
             e.printStackTrace();
@@ -144,8 +144,7 @@ public class InfoArchivo {
                 resultado = match.replaceAll(nuevaExtension);
                 error = false;
                 
-                nombreArchivo = null;
-                nuevaExtension = null;
+              
             };
 
             return resultado;
@@ -158,18 +157,17 @@ public class InfoArchivo {
 
     }
     
-        protected String RemueveExtensionCob(String nombreArchivo, String nuevaExtension) {
+        protected String GeneraExtensionExe(String nombreArchivo, String nuevaExtension) {
         try {
             boolean error = true;
             String resultado = null;
             while (error) {
-                Pattern ptr = Pattern.compile(".kovol", Pattern.CASE_INSENSITIVE);
+                Pattern ptr = Pattern.compile(".cob", Pattern.CASE_INSENSITIVE);
                 Matcher match = ptr.matcher(nombreArchivo);
                 resultado = match.replaceAll(nuevaExtension);
                 error = false;
                 
-                nombreArchivo = null;
-                nuevaExtension = null;
+                
             };
 
             return resultado;
