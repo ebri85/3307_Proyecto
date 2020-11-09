@@ -36,15 +36,16 @@ public class Ejecuta {
     boolean cargarCodigo;
     boolean generaErrores;
 
-    /**
+    /**<b>Constructor Ejecuta()</b>
      *
      */
     public Ejecuta() {
     }
 
     /**
-     *
-     * @param str
+     *<b>Constructor Ejecuta(String str)</b>
+     * 
+     * @param str String str
      */
     public Ejecuta(String str) {
         try {
@@ -94,7 +95,7 @@ public class Ejecuta {
     /**
      * Metodo <b>CargaReservadas()</b>
      *
-     * @return Objeto de tipo @String con la lista de Reservadas
+     * 
      */
     private void CargaReservadas() {
         try {

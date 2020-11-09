@@ -30,8 +30,8 @@ public class InfoArchivo {
     Path rutaNombreErrores;
 
     /**
-     *
-     * @param str
+     *InfoArchivo(String str)
+     * @param str String str
      */
     public InfoArchivo(String str) {
 
@@ -55,8 +55,8 @@ public class InfoArchivo {
 
 
     /**
-     *
-     * @return
+     *String toString()
+     * @return -String
      */
     @Override
     public String toString() {

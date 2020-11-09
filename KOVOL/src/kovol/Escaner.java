@@ -37,9 +37,9 @@ public class Escaner {
 
     /**
      *
-     * @param c
-     * @param r
-     * @param a
+     * @param c List c
+     * @param r ArrayListr
+     * @param a InfoArchivo a
      */
     public Escaner(List<String> c, ArrayList<String> r, InfoArchivo a) {
         this.codigo = c;
@@ -135,7 +135,7 @@ public class Escaner {
      * Metodo <b>RemplazaEspacios</b>
      * Metodo para incluir los numeros del archivo de Errores
      *
-     * @param linea
+     * @param linea String linea
      * @param reemplaza valor con el que se va a reemplazar en la linea
      * @return retorna la linea con la modificacion en el inicio de la linea
      * 00000
@@ -150,8 +150,8 @@ public class Escaner {
      * <b>ValidaTamanoLinea</b>
      * Metodo que empieza a validar lineas
      *
-     * @param linea
-     * @return 0 -> para tamano correcto, 1 tamano incorrecto, -1 error
+     * @param c List c
+     * @return 0 - para tamano correcto, 1 tamano incorrecto, -1 error
      */
     private String ValidaLinea(List<String> c) {
         try {
