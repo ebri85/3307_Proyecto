@@ -18,8 +18,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
- * @author ebri_
+ *<b>class Ejecuta</b>
+ * Lleva acabo el llamado de los diferentes procesos realizados en Escaner, y ademas de compilar el archivo
+ * el archivo.kovol a sus diferentes versiones
+ *  @author Esau Brizuela
  */
 public class Ejecuta {
 
@@ -34,9 +36,16 @@ public class Ejecuta {
     boolean cargarCodigo;
     boolean generaErrores;
 
+    /**
+     *
+     */
     public Ejecuta() {
     }
 
+    /**
+     *
+     * @param str
+     */
     public Ejecuta(String str) {
         try {
 
@@ -61,7 +70,7 @@ public class Ejecuta {
                 cargarCodigo = CargaCodigo();
                 EnviaInfoEscaner(this.codigo, this.reservadas, this.infoArchivo);
                 escaner.GeneraDatos();
-                 Compila();
+                // Compila();
                 
 
             } while (reservadas.isEmpty());
@@ -134,7 +143,10 @@ public class Ejecuta {
         }
 
     }
-
+    /**
+     * Metodo <b>Compila()</b>
+     * Compila el archivo a Exe y luego lo ejecuta en CMD
+     */
     protected void Compila() {
         try {
             this.archivoExe = infoArchivo.GeneraExtensionExe(infoArchivo.nombreCob.toString(), ".exe");

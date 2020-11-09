@@ -14,7 +14,7 @@
 00014  DATA DIVISION.                                                    
 00015   WORKING-STORAGE SECTION.                                         
 00016    77 NUMERO1    PIC 9(2) VALUE ZEROS.                                       
-	 77 NUMERO2    PIC 9(2) VALUE ZEROS. 
+77 NUMERO2    PIC 9(2) VALUE ZEROS. 
 00018    77 RESULTADO1 PIC 9(2)V9(2) VALUE ZEROS. 
 00019    77 RESULTADO2 PIC 9(2)V9(2) VALUE ZEROS. 
 00020    77 RESULTADO3 PIC 9(2)V9(2) VALUE ZEROS. 

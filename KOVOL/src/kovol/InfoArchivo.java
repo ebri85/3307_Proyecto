@@ -11,8 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author ebri_
+ <b>* Clase InfoArchivo</b>
+ *Extrae toda la iformacion necesaria, del Kovol.jar
+ * para apartir de esto generar el resto de archivos.
+ * @author Esau Brizuela
  */
 public class InfoArchivo {
 
@@ -26,6 +28,10 @@ public class InfoArchivo {
     Path nombreCob;
     Path rutaNombreErrores;
 
+    /**
+     *
+     * @param str
+     */
     public InfoArchivo(String str) {
 
         this.archivo = str;
@@ -58,6 +64,11 @@ public class InfoArchivo {
 //        }
 //
 //    }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Detalles del Archivo{\n"

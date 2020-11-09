@@ -19,8 +19,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * <b>Clase Escaner</b>
+ * Esta clase se encarga de analizar los diferentes procesos por medio de los
+ * metodo que se van agregando
  *
- * @author ebri_
+ * @author Esau Brizuela
  */
 public class Escaner {
 
@@ -28,24 +31,38 @@ public class Escaner {
     protected ArrayList<String> errores = new ArrayList();
     protected ArrayList<String> reservadas;
     protected InfoArchivo dataArchivo;
+    int resultado;
 
     boolean error = false;
 
+    /**
+     *
+     * @param c
+     * @param r
+     * @param a
+     */
     public Escaner(List<String> c, ArrayList<String> r, InfoArchivo a) {
         this.codigo = c;
         this.reservadas = r;
         this.dataArchivo = a;
     }
 
+    /**
+     * Metodo <b>GeneraDatos()</b>
+     * Metodo que genera diferentes acciones Generar ArchivoCob Generar
+     * ArchivoErrores
+     */
     protected void GeneraDatos() {
         try {
             boolean error = false;
+            String mensaje;
 
             while (!(error)) {
 
                 // System.out.println(this.dataArchivo.toString());
                 GeneraArchivoCob(this.dataArchivo, this.codigo);
                 error = true;
+                mensaje = ValidaLinea(this.codigo);
 
             }
             GeneraArchivoErrores(this.codigo, this.dataArchivo);
@@ -56,6 +73,12 @@ public class Escaner {
         }
     }
 
+    /**
+     * Metodo<b>GeneraArchivoErrores()</b>
+     *
+     * @param c Lista de codigo
+     * @param a de tipo
+     */
     private void GeneraArchivoErrores(List<String> c, InfoArchivo a) {
         try {
 //            System.out.println("ENTRO AL METODO GeneraArchivoErrores\n"
@@ -75,23 +98,21 @@ public class Escaner {
             for (String ln : c) {
 
                 j = c.lastIndexOf(i);
-                
-                
-               // str1 = String.format("%05d", j);
-                //str2=null;
 
+                // str1 = String.format("%05d", j);
+                //str2=null;
                 //str2 = str1 + ln;
                 if ((ln.isEmpty())) {
-                    
+
                     j = i;
-                
+
                 } else {
                     i++;
-                    j=i;
+                    j = i;
                 }
                 str1 = String.format("%05d", j);
                 str2 = RemplazaEspacios(ln, str1);
-                    this.errores.add(str2);
+                this.errores.add(str2);
                 // System.out.println(ln);
 //                System.out.println("Entro al For de GeneraArchivoErrores\n"
 //                        + "\n" + j + "\n" + str2 + "\n");
@@ -112,6 +133,7 @@ public class Escaner {
 
     /**
      * Metodo <b>RemplazaEspacios</b>
+     * Metodo para incluir los numeros del archivo de Errores
      *
      * @param linea
      * @param reemplaza valor con el que se va a reemplazar en la linea
@@ -124,13 +146,56 @@ public class Escaner {
         return mtch.replaceAll(reemplaza);
     }
 
-    private void GeneraArchivoCob(InfoArchivo a, List c) {
+    /**
+     * <b>ValidaTamanoLinea</b>
+     *
+     * @param linea
+     * @return 0 -> para tamano correcto, 1 tamano incorrecto, -1 error
+     */
+    private String ValidaLinea(List<String> c) {
         try {
-            int error = EncontroError(c);
+
+            String mensajeError = "";
+            for (String linea : c) {
+                boolean continua = true;
+                while (continua) {
+
+                    mensajeError += "#-Linea="+String.valueOf(c.indexOf(linea)) + " Linea-> " + linea + "\n";
+                    mensajeError += (linea.length() <= 80) ? "**" : "Error linea contiene mas columnas de las requeridas\n";
+                    Pattern p = Pattern.compile("^\\s{6}|^\\n");
+                    Matcher m = p.matcher(linea);
+                    mensajeError += (p.matcher(linea).find()) ? "**" : "Error primeras 6 columnas no estan en blanco "+m.matches() + "\n";
+                    Pattern ptr = Pattern.compile(".$");
+                    mensajeError += (ptr.matcher(linea).find()) ? "**" : "Error no encontro '.' al final de la linea\n";
+
+                    continua = false;
+
+                }
+            }
+            System.out.println(mensajeError);
+
+            return mensajeError;
+
+//                Pattern ptr = Pattern.compile("(\w).$+",Pattern.CASE_INSENSITIVE);
+//                 Matcher mtch = ptr.matcher(linea);
+            // mtch.matches();
+            // System.out.println("Linea->"+linea+"\nTamano linea -> "+tamano+"\nSe encontro . =>"+mtch.find());
+        } catch (Exception e) {
+            System.out.println("Clase Escaner>ValidaTamanoLinea()=>" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private void GeneraArchivoCob(InfoArchivo a, List<String> c) {
+        try {
+            int error = 0;
 
             switch (error) {
                 case 0:
                     //File file = new File(a.nombreCob.toString());
+                    //  int n = EncontroError(c);
                     Files.write(a.nombreCob, c);
 
                     break;
@@ -151,10 +216,13 @@ public class Escaner {
         }
     }
 
-    private int EncontroError(List c) {
+    private int EncontroError(List<String> c) {
         try {
-            int resultado = 0;
 
+//            c.forEach((String ln)
+//                    -> {
+//                resultado = ValidaLinea(ln);
+//            });
             return resultado;
 
         } catch (Exception e) {
