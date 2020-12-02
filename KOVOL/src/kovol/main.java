@@ -19,9 +19,14 @@ public class main {
     public static void main(String[] args) {
 
         try {
-            String archivo = args[0];
+            if (args.length > 0) {
+                String archivo = args[0];
+                Ejecuta ejecuta = new Ejecuta(archivo);
 
-            Ejecuta ejecuta = new Ejecuta(archivo);
+            } else {
+                System.out.println("No se ha indicado el nombre de, parametro");
+            }
+
         } catch (Exception e) {
             System.out.println("Clase Main=>" + e.getMessage());
             e.printStackTrace();

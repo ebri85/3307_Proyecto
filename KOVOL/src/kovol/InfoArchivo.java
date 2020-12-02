@@ -19,15 +19,15 @@ import java.util.regex.Pattern;
  */
 public class InfoArchivo {
 
-    String archivo;
-    String rutaArchivo;
-    Path rutaJar = Paths.get("");
-    Path rutaCompletaJar = rutaJar.toAbsolutePath();
-    String DirectorioProyecto = rutaCompletaJar.toString();//ruta de donde se ejecuta el JAR
-    String nombArchivo;
-    String rutaArchivoString;
-    Path nombreCob;
-    Path rutaNombreErrores;
+    protected String archivo;
+    protected String rutaArchivo;
+    protected Path rutaJar = Paths.get("");
+    protected Path rutaCompletaJar = rutaJar.toAbsolutePath();
+    protected String DirectorioProyecto = rutaCompletaJar.toString();//ruta de donde se ejecuta el JAR
+    protected String nombArchivo;
+    protected String rutaArchivoString;
+    protected Path nombreCob;
+    protected Path rutaNombreErrores;
 
     /**
      *InfoArchivo(String str)
@@ -71,7 +71,15 @@ public class InfoArchivo {
     private String NombreArchivo() {
         try {
             Path resultado = Paths.get("").toAbsolutePath().resolve(this.archivo).getFileName();
+            
+            Pattern ptr = Pattern.compile("[a-z0-9&&[^\\W]]*",Pattern.CASE_INSENSITIVE);
+            Matcher match = ptr.matcher(resultado.toString()) ;
+            if(match.matches()){
+                
             return resultado.toString();
+            }else{
+                throw new Exception("El nombre del archivo no cumple", null);
+            }
 
         } catch (Exception e) {
             System.out.println("Clase InfoArchivo>NombreArchivo()=>" + e.getMessage());

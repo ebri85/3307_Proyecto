@@ -18,10 +18,12 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *<b>class Ejecuta</b>
- * Lleva acabo el llamado de los diferentes procesos realizados en Escaner, y ademas de compilar el archivo
- * el archivo.kovol a sus diferentes versiones
- *  @author Esau Brizuela
+ * <b>Class Ejecuta</b>
+ * <p>
+ * Lleva acabo el llamado de los diferentes procesos realizados en Escaner, y
+ * ademas de compilar el archivo el archivo.kovol a sus diferentes versiones</p>
+ *
+ * @author Esau Brizuela
  */
 public class Ejecuta {
 
@@ -36,15 +38,17 @@ public class Ejecuta {
     boolean cargarCodigo;
     boolean generaErrores;
 
-    /**<b>Constructor Ejecuta()</b>
+    /** <b>Constructor Ejecuta()</b>
      *
      */
     public Ejecuta() {
     }
 
     /**
-     *<b>Constructor Ejecuta(String str)</b>
-     * 
+     * <b>Constructor Ejecuta(String str)</b>
+     * <p>
+     * Constructor que inicializa las funcionalidades de la clase Ejecuta</p> *
+     *
      * @param str String str
      */
     public Ejecuta(String str) {
@@ -62,17 +66,25 @@ public class Ejecuta {
 
     }
 
+    /**
+     * <b>Método GeneraDatos</b>
+     * <p>
+     * Este metodo realiza el llamada de otros metodos, que se encarga de hacer
+     * el llamada a diferentes metodos</p>
+     *
+     * @see
+     * @kink
+     */
     protected void GeneraDatos() {
         try {
             do {
                 CargaReservadas();
-                
+
                 infoArchivo.GeneraDatos();
                 cargarCodigo = CargaCodigo();
                 EnviaInfoEscaner(this.codigo, this.reservadas, this.infoArchivo);
                 escaner.GeneraDatos();
                 // Compila();
-                
 
             } while (reservadas.isEmpty());
 
@@ -93,9 +105,11 @@ public class Ejecuta {
     }
 
     /**
-     * Metodo <b>CargaReservadas()</b>
+     * <b> Metodo <b>CargaReservadas()</b>
+     * <p>
+     * Este método accesa el archivo reservadas.txt y lo carga en un ArrayList,
+     * para poder luego se utilizado en la consulta que se requiere</p>
      *
-     * 
      */
     private void CargaReservadas() {
         try {
@@ -122,6 +136,16 @@ public class Ejecuta {
 
     }
 
+    /**
+     *
+     * < b>Metodo CargaCodigo</b>
+     * <p>
+     * Lee el archivo kovol y lo carga a una Lista, esto para hacer más facil
+     * las diferentes validaciones que el compilador necesita hacer</p>
+     *
+     * @return true si no hubo inconveniento durante el proceso de lectura del
+     * archivo
+     */
     private boolean CargaCodigo() {
         try {
             boolean error = false;
@@ -144,8 +168,9 @@ public class Ejecuta {
         }
 
     }
+
     /**
-     * Metodo <b>Compila()</b>
+     * <b>Metodo <b>Compila()</b>
      * Compila el archivo a Exe y luego lo ejecuta en CMD
      */
     protected void Compila() {
@@ -158,7 +183,7 @@ public class Ejecuta {
                 "-x",
                 nomCob
             });
-            
+
             Thread t = new Thread(new Runnable() {
 
                 @Override
@@ -183,34 +208,12 @@ public class Ejecuta {
                 }
             });
             t.start();
-            
 
         } catch (Exception e) {
             System.out.println("Clase Ejecuta>Compila()=>" + e.getMessage());
             e.printStackTrace();
-            
+
         }
     }
 
-//    protected int CorreExe() {
-//        try {
-//            this.archivoExe = infoArchivo.GeneraExtensionExe(infoArchivo.nombreCob.toString(), ".exe");
-//            String arch = this.archivoExe;
-//
-//            Runtime.getRuntime().exec(new String[]{
-//                "cmd",
-//                "/C",
-//                arch
-//
-//            });
-//            rt.waitFor();
-//            return rt.exitValue();
-//
-//        } catch (Exception e) {
-//            System.out.println("Clase Ejecuta>CorreExe()=>" + e.getMessage());
-//            e.printStackTrace();
-//            return -1;
-//        }
-//
-//    }
 }
